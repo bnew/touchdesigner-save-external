@@ -147,29 +147,39 @@ class ExternalFiles:
 		return
 
 	def Save_tox(self, current_loc):
+		'''
+		saves a tox in the selected folder, without creating a sub folder.
+
+		be sure to select directories inside of your main project directory
+
+		be warned, not fully tested
+
+		'''
 		ext_color 				= parent().pars("Extcolor*")
 
 		# ask user for a save location
 		save_loc 		= ui.chooseFolder(title="TOX Location", start=project.folder)
 		
 		# construct a relative path and relative loaction for our elements
-		print(save_loc)
+		#print(save_loc)
 		rel_path 		= tdu.collapsePath(save_loc)
+		print(rel_path)
 		
-		# check to see if the location is at the root of the project folder structure
-		if rel_path == "$TOUCH":
-			rel_loc 	= '{new_tox}/{new_tox}.tox'.format(new_tox = current_loc.name)
+		# # check to see if the location is at the root of the project folder structure
+		# if rel_path == "$TOUCH":
+		# 	rel_loc 	= '{new_tox}/{new_tox}.tox'.format(new_tox = current_loc.name)
 		
-		# save path is not in the root of the project
-		else:
-			rel_loc 	= '{new_module}/{new_tox}/{new_tox}.tox'.format(new_module = rel_path, new_tox = current_loc.name)
+		# # save path is not in the root of the project
+		# else:
+		rel_loc 	= '{rel_dir_path}/{new_tox}.tox'.format( rel_dir_path = rel_path, new_tox = current_loc.name)
 
 		# create path and directory in the OS
-		new_path 		= '{selected_path}/{new_module}'.format(selected_path = save_loc, new_module = current_loc.name)
-		os.mkdir(new_path)
+		#new_path 		= '{selected_path}/{new_module}'.format(selected_path = save_loc, new_module = rel_loc)
+		#os.mkdir(new_path)
 
 		# format our tox path
-		tox_path 		= '{dir_path}/{tox}.tox'.format(dir_path = new_path, tox = current_loc.name)
+		tox_path 		= '{dir_path}/{tox}.tox'.format(dir_path = save_loc, tox = current_loc.name)
+		print(tox_path)
 
 		# setup our module correctly
 		current_loc.par.externaltox 		= rel_loc
